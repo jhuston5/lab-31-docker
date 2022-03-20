@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from .serializer import DockerizeSerializer
+from .permissions import IsOwnerOrReadOnly
 from .models import Dockerize
 # Create your views here.
 
@@ -9,11 +10,13 @@ from .models import Dockerize
 #   serializer_class = DockerizeSerializer
 
 class DockerizeList(generics.ListCreateAPIView):
+  permission_classes = (IsOwnerOrReadOnly,)
   queryset = Dockerize.objects.all()
   serializer_class = DockerizeSerializer
 
 
 class DockerizeDetail(generics.RetrieveUpdateDestroyAPIView):
+  permission_classes = (IsOwnerOrReadOnly,)
   queryset = Dockerize.objects.all()
   serializer_class = DockerizeSerializer
 
